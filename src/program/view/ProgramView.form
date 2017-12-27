@@ -20,7 +20,7 @@
               <text value="Dimensions:"/>
             </properties>
           </component>
-          <component id="4e91f" class="javax.swing.JSpinner" binding="spnWidth">
+          <component id="67ec9" class="javax.swing.JTextField" binding="txtWidth">
             <constraints/>
             <properties>
               <toolTipText value="Choose the width of your background"/>
@@ -32,7 +32,7 @@
               <text value="X"/>
             </properties>
           </component>
-          <component id="a26cc" class="javax.swing.JSpinner" binding="spnHeight">
+          <component id="c2faf" class="javax.swing.JTextField" binding="txtHeight">
             <constraints/>
             <properties>
               <toolTipText value="Choose the height of your background"/>

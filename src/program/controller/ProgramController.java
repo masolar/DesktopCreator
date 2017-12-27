@@ -26,7 +26,8 @@ public class ProgramController {
         model = new ProgramModel(new IProgramModel2ViewAdapter() {
             @Override
             public void displayImage(BufferedImage createdImage) {
-
+                view.displayImage(createdImage);
+                System.out.println("Here");
             }
         });
 

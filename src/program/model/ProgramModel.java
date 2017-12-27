@@ -40,5 +40,7 @@ public class ProgramModel {
                 imageToCreate.setRGB(i, j, new Color(22, 100, 53).getRGB());
             }
         }
+
+        m2v.displayImage(imageToCreate);
     }
 }
