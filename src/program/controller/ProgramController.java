@@ -27,7 +27,6 @@ public class ProgramController {
             @Override
             public void displayImage(BufferedImage createdImage) {
                 view.displayImage(createdImage);
-                System.out.println("Here");
             }
         });
 

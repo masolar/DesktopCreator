@@ -1,5 +1,14 @@
 package program.model;
 
+import conversion.ColorConversion;
+import conversion.CoordinateConversion;
+import functions.IImageFunction;
+import functions.one_arg.CosImageFunction;
+import functions.one_arg.SinImageFunction;
+import functions.two_args.AddImageFunction;
+import functions.zero_args.ConstantImageFunction;
+import functions.zero_args.XImageFunction;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -33,11 +42,21 @@ public class ProgramModel {
 
         imageToCreate = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 
-
+        IImageFunction imageFunction = new AddImageFunction(new SinImageFunction(new XImageFunction()), new ConstantImageFunction(.6, 1));
+        //IImageFunction imageFunction = new CosImageFunction(new XImageFunction());
         // TODO: Parallellize this loop if possible.
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                imageToCreate.setRGB(i, j, new Color(22, 100, 53).getRGB());
+                double convertedI = CoordinateConversion.convertXToDouble(i, width);
+                double convertedJ = CoordinateConversion.convertYToDouble(j, height);
+                double[] color = imageFunction.execute(convertedI, convertedJ);
+
+
+                float[] finalColorArray = ColorConversion.getFloatArrayFromDoubles(color);
+                Color finalPixelColor = new Color(finalColorArray[0],
+                        finalColorArray[1], finalColorArray[2], finalColorArray[3]);
+
+                imageToCreate.setRGB(i, j, finalPixelColor.getRGB());
             }
         }
 

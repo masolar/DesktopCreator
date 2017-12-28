@@ -1,0 +1,11 @@
+package functions.zero_args;
+
+/**
+ * An image function that returns the x coordinates for each color value
+ */
+public class XImageFunction extends ZeroArgumentImageFunction {
+    @Override
+    public double[] execute(double x, double y) {
+        return new double[] {x, x, x, 1};
+    }
+}
