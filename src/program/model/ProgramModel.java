@@ -14,9 +14,9 @@ import java.util.stream.IntStream;
  */
 public class ProgramModel {
 
-    IProgramModel2ViewAdapter m2v;
+    private IProgramModel2ViewAdapter m2v;
 
-    BufferedImage imageToCreate;
+    private BufferedImage imageToCreate;
 
     public ProgramModel(IProgramModel2ViewAdapter m2v) {
         this.m2v = m2v;
@@ -43,13 +43,14 @@ public class ProgramModel {
 
         // TODO: Parallellize this loop if possible.
 
-        int numThreads = 4;
+        int numThreads = 3;
         Thread[] threads = new Thread[numThreads];
 
+        long currTime = System.currentTimeMillis();
         for (int k = 0; k < numThreads; k++) {
-            final int iter = k;
+            final double iter = k;
             threads[k] = new Thread(() -> {
-                for (int i = (iter / numThreads) * width; i < ((iter + 1) / numThreads) * width; i++) {
+                for (int i = (int)(iter / numThreads) * width; i < ((iter + 1) / numThreads) * width; i++) {
                     for (int j = 0; j < height; j++) {
                         double convertedI = CoordinateConversion.convertXToDouble(i, width);
                         double convertedJ = CoordinateConversion.convertYToDouble(j, height);
@@ -85,10 +86,12 @@ public class ProgramModel {
         for (int i = 0; i < numThreads; i++) {
             try {
                 threads[i].join();
+                System.out.println("Thread " + i + " finished");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        System.out.println("Threaded Time = " + (System.currentTimeMillis() - currTime));
         System.out.println(imageFunction);
         m2v.displayImage(imageToCreate);
     }

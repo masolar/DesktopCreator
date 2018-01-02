@@ -1,10 +1,7 @@
 package generator;
 
 import factories.IImageFunctionFactory;
-import factories.one_arg.BWPerlinNoiseImageFunctionFactory;
-import factories.one_arg.ColorPerlinNoiseImageFunctionFactory;
-import factories.one_arg.CosImageFunctionFactory;
-import factories.one_arg.SinImageFunctionFactory;
+import factories.one_arg.*;
 import factories.two_args.AddImageFunctionFactory;
 import factories.two_args.DivideImageFunctionFactory;
 import factories.two_args.MultiplyImageFunctionFactory;
@@ -41,6 +38,9 @@ public class FunctionGenerator {
         });
         otherFactories.add((maxDepth, currentDepth) -> {
             return new CosImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
+        });
+        otherFactories.add((maxDepth, currentDepth) -> {
+            return new ArcTanImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
         });
         otherFactories.add((maxDepth, currentDepth) -> {
             return new BWPerlinNoiseImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
