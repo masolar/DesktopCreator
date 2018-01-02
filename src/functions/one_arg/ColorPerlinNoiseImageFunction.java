@@ -2,10 +2,20 @@ package functions.one_arg;
 
 import functions.IImageFunction;
 
+import java.util.Random;
+
 public class ColorPerlinNoiseImageFunction extends OneArgumentImageFunction {
 
+    private static final Random rand = new Random();
+    private int randomColorVal1, randomColorVal2, randomColorVal3;
+
+    //TODO: Make these values part of the constructor to be deterministic
     public ColorPerlinNoiseImageFunction(IImageFunction argOne) {
         super("ColorPerlin", argOne);
+
+        randomColorVal1 = rand.nextInt(100);
+        randomColorVal2 = rand.nextInt(100);
+        randomColorVal3 = rand.nextInt(100);
     }
 
     //TODO: Figure out best values to put into perlin
@@ -17,7 +27,7 @@ public class ColorPerlinNoiseImageFunction extends OneArgumentImageFunction {
 //                             noise(perlinSeed[1] * 30, perlinSeed[2] * 34, perlinSeed[0] * 97),
 //                             noise(perlinSeed[2] * 15, perlinSeed[0] * 76, perlinSeed[1] * 2),
 //                             1};
-        return new double[] {noise(x, y, 4), noise(x, y, 20), noise(x, y, 16), 1};
+        return new double[] {noise(x, y, randomColorVal1), noise(x, y, randomColorVal2), noise(x, y, randomColorVal3), 1};
     }
 
     //TODO: Fix this duplicate noise code.

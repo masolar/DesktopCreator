@@ -14,6 +14,7 @@ import functions.IImageFunction;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.function.BiFunction;
 
 public class FunctionGenerator {
 
@@ -21,45 +22,43 @@ public class FunctionGenerator {
 
     private static final Random rand = new Random();
 
-    //TODO: Fix this ghetto class code using a visitor.
+    private ArrayList<IImageFunctionFactory> zeroArgFactories;
+    private ArrayList<BiFunction<Integer, Integer, IImageFunctionFactory>> otherFactories;
 
     private FunctionGenerator() {
+        zeroArgFactories = new ArrayList<IImageFunctionFactory>();
+        otherFactories = new ArrayList<BiFunction<Integer, Integer, IImageFunctionFactory>>();
+
+        zeroArgFactories.add(new ConstantImageFunctionFactory());
+        zeroArgFactories.add(new XImageFunctionFactory());
+        zeroArgFactories.add(new YImageFunctionFactory());
+
+        otherFactories.add((maxDepth, currentDepth) -> {
+            return new SinImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
+        });
+        otherFactories.add((maxDepth, currentDepth) -> {
+            return new CosImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
+        });
+        otherFactories.add((maxDepth, currentDepth) -> {
+            return new BWPerlinNoiseImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
+        });
+        otherFactories.add((maxDepth, currentDepth) -> {
+            return new ColorPerlinNoiseImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
+        });
+        otherFactories.add((maxDepth, currentDepth) -> {
+            return new AddImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1), generateRandomFunctionFactory(maxDepth, currentDepth + 1));
+        });
     }
 
     public IImageFunction generateImageFunction(int maxDepth) {
         return generateRandomFunctionFactory(maxDepth, 0).produce();
     }
 
-    //TODO: Clean up this awful builder code. This was done to prototype.
     private IImageFunctionFactory generateRandomFunctionFactory(int maxDepth, int currentDepth) {
         if (maxDepth == currentDepth) {
-            int randNum = rand.nextInt(3);
-
-            switch (randNum) {
-                case 0:
-                    return new ConstantImageFunctionFactory();
-                case 1:
-                    return new XImageFunctionFactory();
-                case 2:
-                    return new YImageFunctionFactory();
-            }
+            return zeroArgFactories.get(rand.nextInt(zeroArgFactories.size()));
         }
 
-        int randNum = rand.nextInt(5);
-
-        switch (randNum) {
-            case 0:
-                return new SinImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
-            case 1:
-                return new CosImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
-            case 2:
-                return new AddImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1), generateRandomFunctionFactory(maxDepth, currentDepth + 1));
-            case 3:
-                return new BWPerlinNoiseImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
-            case 4:
-                return new ColorPerlinNoiseImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
-        }
-
-        return null;
+        return otherFactories.get(rand.nextInt(otherFactories.size())).apply(maxDepth, currentDepth);
     }
 }
