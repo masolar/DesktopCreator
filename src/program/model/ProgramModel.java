@@ -1,13 +1,9 @@
 package program.model;
 
-import conversion.ColorConversion;
-import conversion.CoordinateConversion;
+import utils.conversion.ColorConversion;
+import utils.conversion.CoordinateConversion;
 import functions.IImageFunction;
-import functions.one_arg.CosImageFunction;
-import functions.one_arg.SinImageFunction;
-import functions.two_args.AddImageFunction;
-import functions.zero_args.ConstantImageFunction;
-import functions.zero_args.XImageFunction;
+import generator.FunctionGenerator;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -42,8 +38,8 @@ public class ProgramModel {
 
         imageToCreate = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 
-        IImageFunction imageFunction = new AddImageFunction(new SinImageFunction(new XImageFunction()), new ConstantImageFunction(.6, 1));
-        //IImageFunction imageFunction = new CosImageFunction(new XImageFunction());
+        IImageFunction imageFunction = FunctionGenerator.FUNCTION_GENERATOR.generateImageFunction(5);
+
         // TODO: Parallellize this loop if possible.
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -59,7 +55,7 @@ public class ProgramModel {
                 imageToCreate.setRGB(i, j, finalPixelColor.getRGB());
             }
         }
-
+        System.out.println(imageFunction);
         m2v.displayImage(imageToCreate);
     }
 }

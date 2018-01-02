@@ -5,6 +5,9 @@ package functions.zero_args;
  */
 public class YImageFunction extends ZeroArgumentImageFunction {
 
+    public YImageFunction() {
+        super("Y");
+    }
     @Override
     public double[] execute(double x, double y) {
         return new double[] {y, y, y, 1};

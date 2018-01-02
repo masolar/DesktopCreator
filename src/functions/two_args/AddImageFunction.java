@@ -8,7 +8,7 @@ import functions.IImageFunction;
 public class AddImageFunction extends TwoArgumentImageFunction {
 
     public AddImageFunction(IImageFunction imageFunction1, IImageFunction imageFunction2) {
-        super(imageFunction1, imageFunction2);
+        super("Add", imageFunction1, imageFunction2);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package conversion;
+package utils.conversion;
 
 /**
  * Contains a few handy methods for converting between colors and color spaces.

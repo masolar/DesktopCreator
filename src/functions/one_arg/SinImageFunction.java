@@ -8,7 +8,7 @@ import functions.IImageFunction;
 public class SinImageFunction extends OneArgumentImageFunction {
 
     public SinImageFunction(IImageFunction imageFunction) {
-        super(imageFunction);
+        super("Sin", imageFunction);
     }
 
     @Override

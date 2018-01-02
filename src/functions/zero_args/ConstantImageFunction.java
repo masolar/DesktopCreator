@@ -8,7 +8,8 @@ public class ConstantImageFunction extends ZeroArgumentImageFunction {
 
     public double constant;
 
-    public ConstantImageFunction(double constant, double alpha) {
+    public ConstantImageFunction(double constant) {
+        super("Constant");
         this.constant = constant;
     }
 

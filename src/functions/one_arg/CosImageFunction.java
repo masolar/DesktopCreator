@@ -8,7 +8,7 @@ import functions.IImageFunction;
 public class CosImageFunction extends OneArgumentImageFunction {
 
     public CosImageFunction(IImageFunction imageFunction) {
-        super(imageFunction);
+        super("Cos", imageFunction);
     }
 
     @Override

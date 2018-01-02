@@ -1,4 +1,4 @@
-package conversion;
+package utils.conversion;
 
 /**
  * Contains helpful conversion methods for going between coordinate spaces.
