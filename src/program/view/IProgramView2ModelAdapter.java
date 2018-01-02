@@ -9,6 +9,7 @@ public interface IProgramView2ModelAdapter {
      * Asks the view to create an image of a given size.
      * @param width The width of the image.
      * @param height The height of the image.
+     * @param picDepth The depth of the image tree for this image.
      */
-    public void createImage(int width, int height);
+    void createImage(int width, int height, int picDepth);
 }

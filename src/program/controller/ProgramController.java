@@ -33,8 +33,8 @@ public class ProgramController {
         view = new ProgramView(new IProgramView2ModelAdapter() {
 
             @Override
-            public void createImage(int width, int height) {
-                model.createRandomImage(width, height);
+            public void createImage(int width, int height, int picDepth) {
+                model.createRandomImage(width, height, picDepth);
             }
         });
     }

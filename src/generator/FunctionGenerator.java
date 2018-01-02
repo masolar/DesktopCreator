@@ -6,6 +6,9 @@ import factories.one_arg.ColorPerlinNoiseImageFunctionFactory;
 import factories.one_arg.CosImageFunctionFactory;
 import factories.one_arg.SinImageFunctionFactory;
 import factories.two_args.AddImageFunctionFactory;
+import factories.two_args.DivideImageFunctionFactory;
+import factories.two_args.MultiplyImageFunctionFactory;
+import factories.two_args.SubtractImageFunctionFactory;
 import factories.zero_args.ConstantImageFunctionFactory;
 import factories.zero_args.XImageFunctionFactory;
 import factories.zero_args.YImageFunctionFactory;
@@ -47,6 +50,15 @@ public class FunctionGenerator {
         });
         otherFactories.add((maxDepth, currentDepth) -> {
             return new AddImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1), generateRandomFunctionFactory(maxDepth, currentDepth + 1));
+        });
+        otherFactories.add((maxDepth, currentDepth) -> {
+            return new MultiplyImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1), generateRandomFunctionFactory(maxDepth, currentDepth + 1));
+        });
+        otherFactories.add((maxDepth, currentDepth) -> {
+            return new DivideImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1), generateRandomFunctionFactory(maxDepth, currentDepth + 1));
+        });
+        otherFactories.add((maxDepth, currentDepth) -> {
+            return new SubtractImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1), generateRandomFunctionFactory(maxDepth, currentDepth + 1));
         });
     }
 

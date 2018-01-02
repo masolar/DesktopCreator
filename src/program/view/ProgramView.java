@@ -18,6 +18,8 @@ public class ProgramView extends JFrame {
     private JLabel lblX;
     private JButton btnCreateImage;
     private JLabel lblImage;
+    private JTextField txtPicDepth;
+    private JLabel lblDepth;
 
     public ProgramView(IProgramView2ModelAdapter v2m) {
         this.v2m = v2m;
@@ -77,11 +79,21 @@ public class ProgramView extends JFrame {
         btnCreateImage.setText("Create");
         btnCreateImage.setToolTipText("Create a random image of the given size");
         btnCreateImage.addActionListener((e) -> v2m.createImage(Integer.parseInt(txtWidth.getText()),
-                                                                Integer.parseInt(txtHeight.getText())));
+                                                                Integer.parseInt(txtHeight.getText()),
+                                                                Integer.parseInt(txtPicDepth.getText())));
 
         pnlControls.add(btnCreateImage);
         lblImage = new JLabel();
         lblImage.setText("");
         pnlMain.add(lblImage, BorderLayout.CENTER);
+
+        lblDepth = new JLabel("Depth:");
+        pnlControls.add(lblDepth);
+
+        txtPicDepth = new JTextField();
+        txtPicDepth.setColumns(3);
+        txtPicDepth.setText("5");
+        txtPicDepth.setToolTipText("Determines the depth of the tree that makes this image.");
+        pnlControls.add(txtPicDepth);
     }
 }

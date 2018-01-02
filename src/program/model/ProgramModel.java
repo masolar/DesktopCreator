@@ -7,6 +7,7 @@ import generator.FunctionGenerator;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.stream.IntStream;
 
 /**
  * Holds the model associated with the program.
@@ -33,26 +34,59 @@ public class ProgramModel {
      * @param width The width of the image.
      * @param height The height of the image.
      */
-    public void createRandomImage(int width, int height) {
+    public void createRandomImage(int width, int height, int picDepth) {
         // TODO: Add error handling for negative values.
 
         imageToCreate = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 
-        IImageFunction imageFunction = FunctionGenerator.FUNCTION_GENERATOR.generateImageFunction(5);
+        IImageFunction imageFunction = FunctionGenerator.FUNCTION_GENERATOR.generateImageFunction(picDepth);
 
         // TODO: Parallellize this loop if possible.
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                double convertedI = CoordinateConversion.convertXToDouble(i, width);
-                double convertedJ = CoordinateConversion.convertYToDouble(j, height);
-                double[] color = imageFunction.execute(convertedI, convertedJ);
+
+        int numThreads = 4;
+        Thread[] threads = new Thread[numThreads];
+
+        for (int k = 0; k < numThreads; k++) {
+            final int iter = k;
+            threads[k] = new Thread(() -> {
+                for (int i = (iter / numThreads) * width; i < ((iter + 1) / numThreads) * width; i++) {
+                    for (int j = 0; j < height; j++) {
+                        double convertedI = CoordinateConversion.convertXToDouble(i, width);
+                        double convertedJ = CoordinateConversion.convertYToDouble(j, height);
+                        double[] color = imageFunction.execute(convertedI, convertedJ);
 
 
-                float[] finalColorArray = ColorConversion.getFloatArrayFromDoubles(color);
-                Color finalPixelColor = new Color(finalColorArray[0],
-                        finalColorArray[1], finalColorArray[2], finalColorArray[3]);
+                        float[] finalColorArray = ColorConversion.getFloatArrayFromDoubles(color);
+                        Color finalPixelColor = new Color(finalColorArray[0],
+                                finalColorArray[1], finalColorArray[2], finalColorArray[3]);
 
-                imageToCreate.setRGB(i, j, finalPixelColor.getRGB());
+                        imageToCreate.setRGB(i, j, finalPixelColor.getRGB());
+                    }
+                }
+            });
+            threads[k].start();
+        }
+
+//        for (int i = 0; i < width; i++) {
+//            for (int j = 0; j < height; j++) {
+//                double convertedI = CoordinateConversion.convertXToDouble(i, width);
+//                double convertedJ = CoordinateConversion.convertYToDouble(j, height);
+//                double[] color = imageFunction.execute(convertedI, convertedJ);
+//
+//
+//                float[] finalColorArray = ColorConversion.getFloatArrayFromDoubles(color);
+//                Color finalPixelColor = new Color(finalColorArray[0],
+//                        finalColorArray[1], finalColorArray[2], finalColorArray[3]);
+//
+//                imageToCreate.setRGB(i, j, finalPixelColor.getRGB());
+//            }
+//        }
+
+        for (int i = 0; i < numThreads; i++) {
+            try {
+                threads[i].join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
         System.out.println(imageFunction);

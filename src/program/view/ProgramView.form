@@ -45,6 +45,19 @@
               <toolTipText value="Create a random image of the given size"/>
             </properties>
           </component>
+          <component id="ae111" class="javax.swing.JLabel" binding="lblDepth">
+            <constraints/>
+            <properties>
+              <text value="Depth"/>
+            </properties>
+          </component>
+          <component id="40d43" class="javax.swing.JTextField" binding="txtPicDepth">
+            <constraints/>
+            <properties>
+              <columns value="3"/>
+              <toolTipText value="Choose how large the tree will be for this image."/>
+            </properties>
+          </component>
         </children>
       </grid>
       <component id="1f046" class="javax.swing.JLabel" binding="lblImage">
