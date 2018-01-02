@@ -1,6 +1,8 @@
 package generator;
 
 import factories.IImageFunctionFactory;
+import factories.one_arg.BWPerlinNoiseImageFunctionFactory;
+import factories.one_arg.ColorPerlinNoiseImageFunctionFactory;
 import factories.one_arg.CosImageFunctionFactory;
 import factories.one_arg.SinImageFunctionFactory;
 import factories.two_args.AddImageFunctionFactory;
@@ -43,7 +45,7 @@ public class FunctionGenerator {
             }
         }
 
-        int randNum = rand.nextInt(3);
+        int randNum = rand.nextInt(5);
 
         switch (randNum) {
             case 0:
@@ -52,6 +54,10 @@ public class FunctionGenerator {
                 return new CosImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
             case 2:
                 return new AddImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1), generateRandomFunctionFactory(maxDepth, currentDepth + 1));
+            case 3:
+                return new BWPerlinNoiseImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
+            case 4:
+                return new ColorPerlinNoiseImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
         }
 
         return null;
