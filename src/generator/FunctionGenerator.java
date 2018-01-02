@@ -2,6 +2,7 @@ package generator;
 
 import factories.IImageFunctionFactory;
 import factories.one_arg.*;
+import factories.three_args.LerpImageFunctionFactory;
 import factories.two_args.AddImageFunctionFactory;
 import factories.two_args.DivideImageFunctionFactory;
 import factories.two_args.MultiplyImageFunctionFactory;
@@ -34,6 +35,15 @@ public class FunctionGenerator {
         zeroArgFactories.add(new YImageFunctionFactory());
 
         otherFactories.add((maxDepth, currentDepth) -> {
+            return new ConstantImageFunctionFactory();
+        });
+        otherFactories.add((maxDepth, currentDepth) -> {
+            return new XImageFunctionFactory();
+        });
+        otherFactories.add((maxDepth, currentDepth) -> {
+            return new YImageFunctionFactory();
+        });
+        otherFactories.add((maxDepth, currentDepth) -> {
             return new SinImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1));
         });
         otherFactories.add((maxDepth, currentDepth) -> {
@@ -59,6 +69,11 @@ public class FunctionGenerator {
         });
         otherFactories.add((maxDepth, currentDepth) -> {
             return new SubtractImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1), generateRandomFunctionFactory(maxDepth, currentDepth + 1));
+        });
+        otherFactories.add((maxDepth, currentDepth) -> {
+            return new LerpImageFunctionFactory(generateRandomFunctionFactory(maxDepth, currentDepth + 1),
+                                                generateRandomFunctionFactory(maxDepth, currentDepth + 1),
+                                                generateRandomFunctionFactory(maxDepth, currentDepth + 1));
         });
     }
 
